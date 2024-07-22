@@ -6,6 +6,13 @@
 #define MODULE_NAME "freevxfs"
 #define SEARCH_LOC "/etc/modprobe.d/*.conf"
 
+// Color definitions
+#define RESET "\033[0m"
+#define PURPLE "\033[0;35m"
+#define BLUE "\033[0;34m"
+#define RED "\033[0;31m"
+#define GREEN "\033[0;32m"
+
 // Function to run a command and get the output
 void run_command(const char *command, char *output, size_t output_size)
 {
@@ -84,24 +91,23 @@ int main()
     // Check if the module exists on the system
     if (!module_exists)
     {
-        printf("- module: \"%s\" doesn't exist on the system\n", MODULE_NAME);
-        printf("\nDescription:\n");
+        printf(PURPLE "- module: \"%s\" doesn't exist on the system\n" RESET, MODULE_NAME);
+        printf(PURPLE "Audit Result: PASS\n" RESET);
+        printf("\n" BLUE "Description:\n");
         printf("- The freevxfs filesystem type is a free version of the Veritas type filesystem. This is the\n");
         printf("  primary filesystem type for HP-UX operating systems.\n\n");
 
-        printf("Rationale:\n");
-        printf("- Removing support for unneeded filesystem types reduces the local attack surface of the\n");
+        printf(PURPLE "Rationale:\n");
+        printf(BLUE "- Removing support for unneeded filesystem types reduces the local attack surface of the\n");
         printf("  system. If this filesystem type is not needed, disable it.\n\n");
 
-        printf("References:\n");
-        printf("  1. NIST SP 800-53 Rev. 5: CM-7\n\n");
+        printf(PURPLE "References:\n");
+        printf(BLUE "  1. NIST SP 800-53 Rev. 5: CM-7\n\n");
 
-        printf("MITRE ATT&CK Mappings:\n");
-        printf("- Techniques / Sub-techniques: T1005, T1005.000\n");
-        printf("- Tactics: TA0005\n");
-        printf("- Mitigations: M1050\n");
-
-        printf("Audit Result: PASS\n");
+        printf(PURPLE "MITRE ATT&CK Mappings:\n");
+        printf(BLUE "- Techniques / Sub-techniques: T1005, T1005.000\n");
+        printf(BLUE "- Tactics: TA0005\n");
+        printf(BLUE "- Mitigations: M1050\n" RESET);
         return 0;
     }
 
@@ -124,11 +130,12 @@ int main()
     // Print Audit Result
     if (audit_passed)
     {
-        printf("\nAudit Result:\n ** PASS **\n");
+        printf(PURPLE "\nAudit Result:\n" GREEN " ** PASS **\n");
     }
     else
     {
-        printf("\n- Audit Result:\n ** FAIL **\n - Reason(s) for audit failure:\n");
+        printf(PURPLE "\nAudit Result:\n" RED " ** FAIL **\n");
+        printf(BLUE " - Reason(s) for audit failure:\n");
         if (!loadable)
         {
             printf(" - module: \"%s\" is not loadable\n", MODULE_NAME);
@@ -144,21 +151,21 @@ int main()
     }
 
     // Print Description, Rationale, References, and MITRE ATT&CK Mappings
-    printf("\nDescription:\n");
-    printf("- The freevxfs filesystem type is a free version of the Veritas type filesystem. This is the\n");
+    printf(PURPLE "\nDescription:\n");
+    printf(BLUE "- The freevxfs filesystem type is a free version of the Veritas type filesystem. This is the\n");
     printf("  primary filesystem type for HP-UX operating systems.\n\n");
 
-    printf("Rationale:\n");
-    printf("- Removing support for unneeded filesystem types reduces the local attack surface of the\n");
+    printf(PURPLE "Rationale:\n");
+    printf(BLUE "- Removing support for unneeded filesystem types reduces the local attack surface of the\n");
     printf("  system. If this filesystem type is not needed, disable it.\n\n");
 
-    printf("References:\n");
-    printf("  1. NIST SP 800-53 Rev. 5: CM-7\n\n");
+    printf(PURPLE "References:\n");
+    printf(BLUE "  1. NIST SP 800-53 Rev. 5: CM-7\n\n");
 
-    printf("MITRE ATT&CK Mappings:\n");
-    printf("- Techniques / Sub-techniques: T1005, T1005.000\n");
-    printf("- Tactics: TA0005\n");
-    printf("- Mitigations: M1050\n");
+    printf(PURPLE "MITRE ATT&CK Mappings:\n");
+    printf(BLUE "- Techniques / Sub-techniques: T1005, T1005.000\n");
+    printf(BLUE "- Tactics: TA0005\n");
+    printf(BLUE "- Mitigations: M1050\n");
 
     return 0;
 }
