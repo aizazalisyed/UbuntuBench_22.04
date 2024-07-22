@@ -22,11 +22,11 @@ on x86_64 platforms.
 ## compilation
 
 ```bash
-gcc -o freevxfs_check freevxfs_check.c
+gcc -o file_system file_system.c
 ```
 
 ```bash
-gcc -o cramfs_check cramfs_check.c
+./file_system
 ```
 
 ## Contributing
