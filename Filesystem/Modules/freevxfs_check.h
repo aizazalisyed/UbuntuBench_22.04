@@ -1,3 +1,6 @@
+#ifndef FREEVXFS_AUDIT_H
+#define FREEVXFS_AUDIT_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,7 +82,7 @@ int check_module_denylisted()
     return strlen(output) == 0 ? 0 : 1;
 }
 
-int main()
+int run_freevxfs_checks()
 {
     int module_exists = check_module_availability();
     int loadable = check_module_loadable();
@@ -169,3 +172,5 @@ int main()
 
     return 0;
 }
+
+#endif
