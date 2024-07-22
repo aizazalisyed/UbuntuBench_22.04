@@ -1,10 +1,13 @@
+#ifndef CRAMFS_CHECK_H
+#define CRAMFS_CHECK_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#define MODULE_NAME "cramfs"
-#define SEARCH_LOC "/etc/modprobe.d/*.conf"
+#define CRAMFS_MODULE_NAME "cramfs"
+#define CRAMFS_SEARCH_LOC "/etc/modprobe.d/*.conf"
 
 // Color definitions
 #define RESET "\033[0m"
@@ -14,7 +17,7 @@
 #define GREEN "\033[0;32m"
 
 // Function to run a command and get the output
-void run_command(const char *command, char *output, size_t output_size)
+void run_command_cramfs(const char *command, char *output, size_t output_size)
 {
     FILE *fp = popen(command, "r");
     if (fp == NULL)
@@ -30,10 +33,10 @@ void run_command(const char *command, char *output, size_t output_size)
 }
 
 // Function to check if the module exists
-int check_module_availability()
+int check_module_availability_cramfs()
 {
     char command[256];
-    snprintf(command, sizeof(command), "find /lib/modules/$(uname -r)/kernel/fs/cramfs");
+    snprintf(command, sizeof(command), "find /lib/modules/$(uname -r)/kernel/fs/%s", CRAMFS_MODULE_NAME);
     FILE *fp = popen(command, "r");
     if (fp == NULL)
     {
@@ -50,48 +53,48 @@ int check_module_availability()
 }
 
 // Function to check if the module is loadable
-int check_module_loadable()
+int check_module_loadable_cramfs()
 {
     char command[256];
     char output[1024];
-    snprintf(command, sizeof(command), "modprobe -n -v %s", MODULE_NAME);
-    run_command(command, output, sizeof(output));
+    snprintf(command, sizeof(command), "modprobe -n -v %s", CRAMFS_MODULE_NAME);
+    run_command_cramfs(command, output, sizeof(output));
     return strstr(output, "install /bin/false") != NULL ? 0 : 1;
 }
 
 // Function to check if the module is loaded
-int check_module_loaded()
+int check_module_loaded_cramfs()
 {
     char command[256];
     char output[1024];
-    snprintf(command, sizeof(command), "lsmod | grep %s", MODULE_NAME);
-    run_command(command, output, sizeof(output));
+    snprintf(command, sizeof(command), "lsmod | grep %s", CRAMFS_MODULE_NAME);
+    run_command_cramfs(command, output, sizeof(output));
     return strlen(output) == 0 ? 1 : 0;
 }
 
 // Function to check if the module is deny listed
-int check_module_denylisted()
+int check_module_denylisted_cramfs()
 {
     char command[256];
     char output[1024];
-    snprintf(command, sizeof(command), "grep -P '^\\s*blacklist\\s+%s' %s", MODULE_NAME, SEARCH_LOC);
-    run_command(command, output, sizeof(output));
+    snprintf(command, sizeof(command), "grep -P '^\\s*blacklist\\s+%s' %s", CRAMFS_MODULE_NAME, CRAMFS_SEARCH_LOC);
+    run_command_cramfs(command, output, sizeof(output));
     return strlen(output) == 0 ? 0 : 1;
 }
 
-int main()
+int run_cramfs_checks()
 {
-    int module_exists = check_module_availability();
-    int loadable = check_module_loadable();
-    int loaded = check_module_loaded();
-    int denylisted = check_module_denylisted();
+    int module_exists = check_module_availability_cramfs();
+    int loadable = check_module_loadable_cramfs();
+    int loaded = check_module_loaded_cramfs();
+    int denylisted = check_module_denylisted_cramfs();
 
     int audit_passed = 1;
 
     // Check if the module exists on the system
     if (!module_exists)
     {
-        printf(PURPLE "- module: \"%s\" doesn't exist on the system\n" RESET, MODULE_NAME);
+        printf(PURPLE "- module: \"%s\" doesn't exist on the system\n" RESET, CRAMFS_MODULE_NAME);
         printf(PURPLE "Audit Result: PASS\n" RESET);
         printf("\n" BLUE "Description:\n");
         printf("- The cramfs filesystem type is a compressed read-only Linux filesystem embedded in\n");
@@ -139,15 +142,15 @@ int main()
         printf(BLUE " - Reason(s) for audit failure:\n");
         if (!loadable)
         {
-            printf(" - module: \"%s\" is not loadable\n", MODULE_NAME);
+            printf(" - module: \"%s\" is not loadable\n", CRAMFS_MODULE_NAME);
         }
         if (!loaded)
         {
-            printf(" - module: \"%s\" is not loaded\n", MODULE_NAME);
+            printf(" - module: \"%s\" is not loaded\n", CRAMFS_MODULE_NAME);
         }
         if (!denylisted)
         {
-            printf(" - module: \"%s\" is not deny listed\n", MODULE_NAME);
+            printf(" - module: \"%s\" is not deny listed\n", CRAMFS_MODULE_NAME);
         }
     }
 
@@ -171,3 +174,5 @@ int main()
 
     return 0;
 }
+
+#endif // CRAMFS_CHECK_H

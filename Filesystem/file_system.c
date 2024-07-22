@@ -1,8 +1,10 @@
 #include "Modules/freevxfs_check.h"
+#include "Modules/cramfs_check.h"
 
 int main()
 {
-    // Call the function to perform the audit
+
+    run_cramfs_checks();
     run_freevxfs_checks();
 
     return 0;
