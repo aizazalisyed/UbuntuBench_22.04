@@ -1,9 +1,10 @@
 #include "Modules/freevxfs_check.h"
 #include "Modules/cramfs_check.h"
 #include "Modules/hfs_check.h"
+#include "Modules/hfsplus_checks.h"
 
 // Color definition for yellow
-#define YELLOW "\033[0;33m"
+#define YELLOW "\033[1;33m"
 
 int main()
 {
@@ -18,6 +19,10 @@ int main()
     // Heading for hfs check
     printf(YELLOW "\n3) Ensure hfs kernel module is not available\n" RESET);
     run_hfs_checks();
+
+    // Heading for hfsplus check
+    printf(YELLOW "\n4) Ensure hfsplus kernel module is not available\n" RESET);
+    run_hfsplus_checks();
 
     return 0;
 }
