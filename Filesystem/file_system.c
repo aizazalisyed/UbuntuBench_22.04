@@ -4,6 +4,7 @@
 #include "Modules/hfsplus_checks.h"
 #include "Modules/jffs2_check.c"
 #include "Modules/squashfs_check.h"
+#include "Modules/udf_check.h"
 
 // Color definition for yellow
 #define YELLOW "\033[1;33m"
@@ -33,6 +34,10 @@ int main()
     // Heading for squashfs check
     printf(YELLOW "\n6) Ensure squashfs kernel module is not available\n" RESET);
     run_squashfs_checks();
+
+    // Heading for udf check
+    printf(YELLOW "\n7) Ensure udf kernel module is not available\n" RESET);
+    run_udf_checks();
 
     return 0;
 }
