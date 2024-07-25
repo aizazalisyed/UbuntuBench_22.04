@@ -5,6 +5,7 @@
 #include "Modules/jffs2_check.c"
 #include "Modules/squashfs_check.h"
 #include "Modules/udf_check.h"
+#include "Modules/usb_storage_check.h"
 
 // Color definition for yellow
 #define YELLOW "\033[1;33m"
@@ -38,6 +39,10 @@ int main()
     // Heading for udf check
     printf(YELLOW "\n7) Ensure udf kernel module is not available\n" RESET);
     run_udf_checks();
+
+    // Heading for usb_storage check
+    printf(YELLOW "\n8) Ensure usb-storage kernel module is not available\n" RESET);
+    run_usb_storage_checks(); // Call the USB storage check function
 
     return 0;
 }
