@@ -1,3 +1,6 @@
+#ifndef FILE_SYSTEM_H
+#define FILE_SYSTEM_H
+
 #include "Modules/freevxfs_check.h"
 #include "Modules/cramfs_check.h"
 #include "Modules/hfs_check.h"
@@ -7,13 +10,10 @@
 #include "Modules/udf_check.h"
 #include "Modules/usb_storage_check.h"
 
-// Color definition for yellow
-#define YELLOW "\033[1;33m"
-
-int main()
+void file_system_test_run()
 {
     // Heading for cramfs check
-    printf(YELLOW "\n1) Ensure cramfs kernel module is not available\n" RESET);
+    printf(YELLOW "\n\n1) Ensure cramfs kernel module is not available\n" RESET);
     run_cramfs_checks();
 
     // Heading for freevxfs check
@@ -43,6 +43,6 @@ int main()
     // Heading for usb_storage check
     printf(YELLOW "\n8) Ensure usb-storage kernel module is not available\n" RESET);
     run_usb_storage_checks(); // Call the USB storage check function
-
-    return 0;
 }
+
+#endif

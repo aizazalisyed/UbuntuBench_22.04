@@ -22,11 +22,11 @@ on x86_64 platforms.
 ## compilation
 
 ```bash
-gcc -o file_system file_system.c
+gcc -o ub_22 ub_22.c
 ```
 
 ```bash
-./file_system
+./ub_22
 ```
 
 ## Contributing

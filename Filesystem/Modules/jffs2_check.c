@@ -9,13 +9,6 @@
 #define JFFS2_MODULE_NAME "jffs2"
 #define JFFS2_SEARCH_LOC "/etc/modprobe.d/*.conf"
 
-// Color definitions
-#define RESET "\033[0m"
-#define PURPLE "\033[0;35m"
-#define BLUE "\033[0;34m"
-#define RED "\033[0;31m"
-#define GREEN "\033[0;32m"
-
 // Function to run a command and get the output
 void run_command_jffs2(const char *command, char *output, size_t output_size)
 {

@@ -1,14 +1,16 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "../util/colors.h"
 #include <stdio.h>
-
-// ANSI escape codes for colors
-#define ORANGE "\033[38;5;214m"
-#define RESET_COLOR "\033[0m"
+#include "initial_setup/insitial_setup.h"
 
 void printLogo()
 {
+    printf("\n\n");
+    printf(ORANGE "**********************************************************************************\n" RESET);
+    printf("\n\n");
+
     printf(ORANGE);
     printf("                                                                            \n");
     printf("                                                                       ,--, \n");
@@ -26,7 +28,17 @@ void printLogo()
     printf(":  ,      .-./   | ,'  ;   | .'    ;   | .'   \\  ; |\\   \\ .'         '  ,/  \n");
     printf(" `--`----'   `----'    `---'       `---'       `--\"  `---`           '--'   \n");
     printf("                                                                            \n");
-    printf(RESET_COLOR);
+    printf(RESET);
+
+    printf(PURPLE);
+    printf("Coded by Syed Aizaz Ali\n");
+    printf("Ubuntu Linux 22.04 LTS\n");
+    printf("Benchmark v2.0.0 (03-28-2024)\n");
+    printf(RESET);
+
+    printf("\n\n");
+    printf(ORANGE "**********************************************************************************\n" RESET);
+    printf("\n\n");
 }
 
 void printMenu()
@@ -37,13 +49,14 @@ void printMenu()
     printf("4. Configure nftables\n");
     printf("5. Access Control\n");
     printf("6. Logging and Auditing\n");
-    printf("0. Exit\n");
+    printf("7. System Maintenance\n");
+    printf("0. Exit\n\n");
 }
 
 void initialSetup()
 {
     printf("Performing Initial Setup...\n");
-    // Add your setup code here
+    initialSetupSubMenu();
 }
 
 void services()
@@ -76,7 +89,13 @@ void loggingAndAuditing()
     // Add your logging and auditing code here
 }
 
-void disply_menu()
+void systemMaintenance()
+{
+    printf("Performing System Maintenance...\n");
+    // Add your system maintenance code here
+}
+
+void display_menu()
 {
     int choice;
     do
@@ -105,6 +124,9 @@ void disply_menu()
             break;
         case 6:
             loggingAndAuditing();
+            break;
+        case 7:
+            systemMaintenance();
             break;
         case 0:
             printf("Exiting...\n");
